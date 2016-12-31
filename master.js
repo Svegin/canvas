@@ -6,14 +6,21 @@ canvas.hight = window.innerHignt;
 ctx.strokeStyle = '#BADA55';
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
+ctx.lineWidth = 20;
 
 // flag for drawing
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
+let hue =0;
+let direction = true;
+
 function draw(e) {
-  if (!isDrawing) return; //stop the fn from running whem they are not moused
+  if (!isDrawing) return; //stop the fn from running whem they are not moused down
+
   console.log(e);
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+  ctx.lineWidth = hue;
   ctx.beginPath();
   //start from
   ctx.moveTo(lastX, lastY);
@@ -21,6 +28,10 @@ function draw(e) {
   ctx.lineTo(e.offsetX, e.offsetY);
   ctx.stroke();
   [lastX, lastY] = [e.offsetX, e.offsetY];
+  hue++;
+  if (hue >= 360) {
+    hue = 0;
+  }
   lastX = e.offsetX;
   lastY = e.offsetY;
 }
