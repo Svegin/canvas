@@ -6,7 +6,8 @@ canvas.hight = window.innerHignt;
 ctx.strokeStyle = '#BADA55';
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
-ctx.lineWidth = 20;
+ctx.lineWidth = 10;
+ctx.globalCompositeOperation = 'overlay';
 
 // flag for drawing
 let isDrawing = false;
@@ -20,7 +21,6 @@ function draw(e) {
 
   console.log(e);
   ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-  ctx.lineWidth = hue;
   ctx.beginPath();
   //start from
   ctx.moveTo(lastX, lastY);
@@ -31,7 +31,16 @@ function draw(e) {
   hue++;
   if (hue >= 360) {
     hue = 0;
+  };
+  if (ctx.lineWidth >= 80 || ctx.lineWidth <= 1) {
+    direction =!direction;
   }
+  if (direction) {
+    ctx.lineWidth++;
+  } else {
+    ctx.lineWidth--;
+  }
+
   lastX = e.offsetX;
   lastY = e.offsetY;
 }
